@@ -1,0 +1,17 @@
+# 备份文件（含加密数据）
+vaultnote-encrypted-backup-*.json
+
+# 导出脚本
+导出表格.bat
+*.xlsx
+*.csv
+
+# 敏感数据
+data/
+logs/
+.env
+.env.example
+
+# 工具目录的备份输出
+tools/output/
+tools/temp/
