@@ -1,0 +1,22 @@
+VaultNote 使用说明
+
+1. 在任意 PC 使用
+- 复制整个 0505 文件夹到新电脑。
+- 双击 index.html 打开工具。
+- 如果是新浏览器或新电脑，先在原电脑导出加密备份，或复制 vaultnote-encrypted-backup-latest.json。
+- 在工具的“设置 > 导入备份”里粘贴加密备份内容，并输入主密码。
+
+2. 数据保存位置
+- 工具数据默认保存在当前浏览器的本地存储里。
+- 换电脑、换浏览器、清理浏览器数据后，本地数据不会自动跟过去。
+- 所以加密备份文件很重要：vaultnote-encrypted-backup-latest.json。
+
+3. 更新表格
+- 数据在页面里更新后，双击“导出表格.bat”。
+- 它会先读取最新数据，再删除旧的 vaultnote-export-*.csv。
+- 然后输入主密码，会生成新的 vaultnote-export-latest.csv。
+
+4. 文件区别
+- vaultnote-encrypted-backup-latest.json：加密备份，用于恢复/迁移。
+- vaultnote-export-latest.csv：明文表格，方便 Excel/WPS 使用。
+- CSV 是明文敏感数据，用完请妥善保管。

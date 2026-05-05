@@ -1,9 +1,23 @@
 const fs = require("fs");
 const path = require("path");
 
-const levelDir =
-  "C:/Users/admin/AppData/Roaming/Codex/Partitions/codex-browser-app/Local Storage/leveldb";
 const outDir = "C:/Users/admin/Desktop/0505";
+const candidateDirs = [
+  "C:/Users/admin/AppData/Roaming/Codex/Partitions/codex-browser-app/Local Storage/leveldb",
+  "C:/Users/admin/AppData/Local/Packages/OpenAI.Codex_2p2nqsd0c76g0/LocalCache/Roaming/Codex/Partitions/codex-browser-app/Local Storage/leveldb",
+  "C:/Users/admin/AppData/Local/Packages/OpenAI.Codex_2p2nqsd0c76g0/LocalCache/Roaming/Codex/Local Storage/leveldb",
+  "C:/Users/admin/AppData/Roaming/Codex/Local Storage/leveldb",
+];
+
+const levelDir = candidateDirs.find((dir) => fs.existsSync(dir));
+
+if (!levelDir) {
+  console.error("No Codex browser LevelDB folder found.");
+  console.error("Checked:");
+  for (const dir of candidateDirs) console.error(`- ${dir}`);
+  process.exit(2);
+}
+
 const files = fs
   .readdirSync(levelDir)
   .filter((file) => /\.(log|ldb)$/.test(file) || file.startsWith("MANIFEST"));
@@ -74,3 +88,4 @@ const pretty = JSON.stringify(latest.payload, null, 2);
 fs.writeFileSync(path.join(outDir, `vaultnote-encrypted-backup-${stamp}.json`), pretty, "utf8");
 fs.writeFileSync(path.join(outDir, "vaultnote-encrypted-backup-latest.json"), pretty, "utf8");
 console.log(`Saved ${found.length} payload(s). Latest source: ${latest.file}`);
+console.log(`LevelDB folder: ${levelDir}`);

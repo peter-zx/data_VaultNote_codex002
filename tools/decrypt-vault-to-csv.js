@@ -135,7 +135,12 @@ function askPassword() {
   const password = await askPassword();
   const data = await decryptVault(password, payload);
   const records = data.records || [];
-  const outFile = path.join(workspace, `vaultnote-export-${new Date().toISOString().slice(0, 10)}.csv`);
+  for (const file of fs.readdirSync(workspace)) {
+    if (/^vaultnote-export-.*\.csv$/i.test(file)) {
+      fs.unlinkSync(path.join(workspace, file));
+    }
+  }
+  const outFile = path.join(workspace, "vaultnote-export-latest.csv");
   fs.writeFileSync(outFile, toCsv(records), "utf8");
   console.log(`已导出 ${records.length} 条记录：${outFile}`);
 })().catch((error) => {
